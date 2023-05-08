@@ -21,6 +21,12 @@ url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&ap
 response = request(url)
 puts response
 
+photos = []
+response["photos"].each do |photo|
+  photos << photo["img_src"]
+end
+puts photos
+
 def build_web_page(data)
   html = "<html>\n<head>\n</head>\n<body>\n<ul>\n"
   data["photos"].each do |photo|
@@ -41,6 +47,12 @@ end
 url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=4CRI39bN6hmOFwsxS2c6xiSOeNpNKqVG2FznEOf7"
 response = request(url)
 puts response
+
+photos = []
+response["photos"].each do |photo|
+  photos << photo["img_src"]
+end
+puts photos
 
 html = build_web_page(response)
 puts html
