@@ -21,10 +21,7 @@ url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&ap
 response = request(url)
 puts response
 
-photos = []
-response["photos"].each do |photo|
-  photos << photo["img_src"]
-end
+photos = response["photos"].map{|x| x['img_src']}
 puts photos
 
 def build_web_page(data)
@@ -44,18 +41,10 @@ def photos_count(data)
   return count
 end
 
-url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=4CRI39bN6hmOFwsxS2c6xiSOeNpNKqVG2FznEOf7"
-response = request(url)
-puts response
-
-photos = []
-response["photos"].each do |photo|
-  photos << photo["img_src"]
+html = ""
+photos.each do |photo|
+  html += "<img src=\"#{photo}\">\n"
 end
-puts photos
+File.write('output.html', html)
 
-html = build_web_page(response)
-puts html
-
-count = photos_count(response)
-puts count
+puts photos_count(response)
